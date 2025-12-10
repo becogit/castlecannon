@@ -50,47 +50,6 @@
 
     <script type="text/babel">
 
-        // --- Header Component ---
-        const Header = () => {
-            const [isScrolled, setIsScrolled] = React.useState(false);
-
-            React.useEffect(() => {
-                const handleScroll = () => {
-                    setIsScrolled(window.scrollY > 20);
-                };
-                window.addEventListener('scroll', handleScroll);
-                return () => window.removeEventListener('scroll', handleScroll);
-            }, []);
-
-            return (
-                <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-castle-dark/95 backdrop-blur-sm border-b border-royal-gold/30 py-2' : 'bg-transparent py-6'}`}>
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex justify-center md:justify-between items-center">
-                            {/* Logo */}
-                            <div className="flex items-center cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-                                <div className="w-10 h-10 bg-royal-gold rounded-full flex items-center justify-center mr-3 border-2 border-white/20">
-                                    <span className="text-castle-dark font-black text-xl">C</span>
-                                </div>
-                                <span className="text-xl md:text-2xl font-bold tracking-widest text-white uppercase font-serif">
-                                    Castle <span className="text-royal-gold">&</span> Cannon
-                                </span>
-                            </div>
-
-                            {/* Contact Button Desktop */}
-                            <div className="hidden md:block">
-                                <a
-                                   href="mailto:castleandcannon@gmail.com"
-                                   className="px-4 py-2 border border-royal-gold text-royal-gold hover:bg-royal-gold hover:text-castle-dark transition-colors rounded text-sm font-bold uppercase"
-                                >
-                                    Contact Support
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </header>
-            );
-        };
-
         // --- Hero Component (Game Banner) ---
         const Hero = () => {
             return (
@@ -103,11 +62,11 @@
 
                     {/* Layer 3: Castle/Landscape */}
                     <div className="absolute inset-0 z-0 flex items-end justify-center">
-                        <img 
-                            src="https://images.unsplash.com/photo-1621516087532-68c6e264669f?q=80&w=2232&auto=format&fit=crop" 
-                            alt="Medieval Castle Background" 
-                            className="w-full h-full object-cover object-bottom opacity-90"
-                        />
+                        {/* Img yerine div background kullanıldı (alt text görünmemesi için) */}
+                        <div 
+                            className="w-full h-full bg-cover bg-bottom opacity-90"
+                            style={{ backgroundImage: "url('https://images.unsplash.com/photo-1621516087532-68c6e264669f?q=80&w=2232&auto=format&fit=crop')" }}
+                        ></div>
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
                     </div>
 
@@ -181,7 +140,7 @@
                         </div>
                         
                         <p className="mt-8 text-white/60 text-sm font-bold drop-shadow-md">
-                            v1.0.0 • 2025 Edition
+                            2025
                         </p>
                     </div>
                 </section>
@@ -253,7 +212,7 @@
         const App = () => {
             return (
                 <div className="min-h-screen bg-castle-dark flex flex-col">
-                    <Header />
+                    {/* Header Removed */}
                     <main className="flex-grow">
                         <Hero />
                     </main>
