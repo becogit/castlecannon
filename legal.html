@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Castle & Cannon</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- React ve ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Babel -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Lato', sans-serif; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Cinzel', serif; }
+        @keyframes shine {
+            100% { left: 125%; }
+        }
+        .animate-shine {
+            animation: shine 1s;
+        }
+    </style>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'castle-dark': '#1a1a1a',
+                        'castle-stone': '#2d2d2d',
+                        'royal-gold': '#d4af37',
+                        'cannon-iron': '#4a4a4a',
+                        'crimson-banner': '#8a1c1c'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-castle-dark text-gray-200 antialiased">
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        // --- Header Component ---
+        const Header = () => {
+            const [isScrolled, setIsScrolled] = React.useState(false);
+
+            React.useEffect(() => {
+                const handleScroll = () => {
+                    setIsScrolled(window.scrollY > 20);
+                };
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            return (
+                <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-castle-dark/95 backdrop-blur-sm border-b border-royal-gold/30 py-2' : 'bg-transparent py-6'}`}>
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="flex justify-center md:justify-between items-center">
+                            {/* Logo */}
+                            <div className="flex items-center cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                                <div className="w-10 h-10 bg-royal-gold rounded-full flex items-center justify-center mr-3 border-2 border-white/20">
+                                    <span className="text-castle-dark font-black text-xl">C</span>
+                                </div>
+                                <span className="text-xl md:text-2xl font-bold tracking-widest text-white uppercase font-serif">
+                                    Castle <span className="text-royal-gold">&</span> Cannon
+                                </span>
+                            </div>
+
+                            {/* Contact Button Desktop */}
+                            <div className="hidden md:block">
+                                <a
+                                   href="mailto:castleandcannon@gmail.com"
+                                   className="px-4 py-2 border border-royal-gold text-royal-gold hover:bg-royal-gold hover:text-castle-dark transition-colors rounded text-sm font-bold uppercase"
+                                >
+                                    Contact Support
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+            );
+        };
+
+        // --- Hero Component (Game Banner) ---
+        const Hero = () => {
+            return (
+                <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-sky-300 font-sans">
+                    {/* Layer 1: Sky Gradient */}
+                    <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#4facfe] to-[#00f2fe]"></div>
+                    
+                    {/* Layer 2: Clouds */}
+                    <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/clouds.png')] opacity-30 animate-pulse"></div>
+
+                    {/* Layer 3: Castle/Landscape */}
+                    <div className="absolute inset-0 z-0 flex items-end justify-center">
+                        <img 
+                            src="https://images.unsplash.com/photo-1621516087532-68c6e264669f?q=80&w=2232&auto=format&fit=crop" 
+                            alt="Medieval Castle Background" 
+                            className="w-full h-full object-cover object-bottom opacity-90"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                    </div>
+
+                    {/* Layer 4: Ground Platform */}
+                    <div className="absolute bottom-0 left-0 right-0 h-8 md:h-16 bg-[#2d5a27] border-t-4 border-[#1a3c15] z-10"></div>
+
+                    {/* --- Main Menu UI --- */}
+                    <div className="relative z-20 container mx-auto px-4 text-center">
+                        
+                        {/* Game Logo */}
+                        <div className="mb-10 transform hover:scale-105 transition-transform duration-500 cursor-default">
+                            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white tracking-tighter leading-none select-none"
+                                style={{ textShadow: '0 8px 0 #000', WebkitTextStroke: '3px black' }}>
+                                CASTLE
+                            </h1>
+                            <div className="text-6xl md:text-8xl lg:text-9xl font-black text-[#ffb100] tracking-tighter leading-none -mt-2 md:-mt-6 select-none"
+                                style={{ textShadow: '0 8px 0 #000', WebkitTextStroke: '3px black' }}>
+                                & CANNON
+                            </div>
+                        </div>
+                        
+                        {/* Menu Box */}
+                        <div className="bg-[#2a2a2a] p-1 rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] max-w-md mx-auto border-4 border-[#5a5a5a] relative">
+                            {/* Inner Border */}
+                            <div className="bg-[#333] border-2 border-[#1a1a1a] rounded-lg p-6 relative overflow-hidden">
+                                
+                                {/* Decorative Rivets */}
+                                <div className="absolute top-2 left-2 w-2 h-2 bg-[#777] rounded-full shadow-inner"></div>
+                                <div className="absolute top-2 right-2 w-2 h-2 bg-[#777] rounded-full shadow-inner"></div>
+                                <div className="absolute bottom-2 left-2 w-2 h-2 bg-[#777] rounded-full shadow-inner"></div>
+                                <div className="absolute bottom-2 right-2 w-2 h-2 bg-[#777] rounded-full shadow-inner"></div>
+
+                                <h2 className="text-gray-400 text-sm font-bold uppercase tracking-widest mb-6 border-b border-gray-600 pb-2">
+                                    Main Menu
+                                </h2>
+
+                                <div className="space-y-4">
+                                    {/* Privacy Button */}
+                                    <a 
+                                        href="https://becogit.github.io/castlecannon/privacy.html" 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="block w-full group"
+                                    >
+                                        <div className="bg-[#ffb100] hover:bg-[#ffc107] text-[#3d2c00] font-black text-xl py-4 rounded border-b-[6px] border-[#b37400] active:border-b-0 active:translate-y-[6px] transition-all uppercase tracking-widest shadow-lg relative overflow-hidden">
+                                            <span className="relative z-10">Privacy Policy</span>
+                                            <div className="absolute top-0 left-0 w-full h-full bg-white/20 -skew-x-12 -translate-x-full group-hover:animate-shine transition-all duration-1000"></div>
+                                        </div>
+                                    </a>
+                                    
+                                    {/* Terms Button */}
+                                    <a 
+                                        href="https://becogit.github.io/castlecannon/terms.html" 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="block w-full group"
+                                    >
+                                        <div className="bg-[#e0e0e0] hover:bg-white text-[#333] font-black text-xl py-4 rounded border-b-[6px] border-[#999] active:border-b-0 active:translate-y-[6px] transition-all uppercase tracking-widest shadow-lg">
+                                            Terms of Service
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div className="mt-8 pt-4 border-t border-gray-600">
+                                    <p className="text-gray-500 text-xs font-bold uppercase mb-1">Support Channel</p>
+                                    <a href="mailto:castleandcannon@gmail.com" className="text-[#ffb100] hover:text-white font-bold text-base transition-colors">
+                                        castleandcannon@gmail.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p className="mt-8 text-white/60 text-sm font-bold drop-shadow-md">
+                            v1.0.0 • 2025 Edition
+                        </p>
+                    </div>
+                </section>
+            );
+        };
+
+        // --- Footer Component ---
+        const Footer = () => {
+            const currentYear = new Date().getFullYear();
+
+            return (
+                <footer className="bg-black text-gray-500 py-12 border-t border-white/10">
+                    <div className="container mx-auto px-4">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                            <div className="col-span-1 md:col-span-1">
+                                <h4 className="text-white text-xl font-serif font-bold mb-4">Castle & Cannon</h4>
+                                <p className="max-w-md mb-4 text-sm">
+                                    Strategic tower defense warfare.
+                                </p>
+                            </div>
+                            
+                            <div>
+                                <h5 className="text-white font-bold uppercase tracking-wider mb-4">Contact</h5>
+                                <ul className="space-y-2">
+                                    <li>
+                                        <a href="mailto:castleandcannon@gmail.com" className="hover:text-royal-gold transition-colors break-all">
+                                            castleandcannon@gmail.com
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <h5 className="text-white font-bold uppercase tracking-wider mb-4">Legal</h5>
+                                <ul className="space-y-2">
+                                    <li>
+                                        <a 
+                                            href="https://becogit.github.io/castlecannon/privacy.html" 
+                                            target="_blank" 
+                                            rel="noopener noreferrer"
+                                            className="hover:text-royal-gold transition-colors"
+                                        >
+                                            Privacy Policy
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a 
+                                            href="https://becogit.github.io/castlecannon/terms.html" 
+                                            target="_blank" 
+                                            rel="noopener noreferrer"
+                                            className="hover:text-royal-gold transition-colors"
+                                        >
+                                            Terms of Service
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-sm">
+                            <p>&copy; {currentYear} Castle & Cannon. All rights reserved.</p>
+                        </div>
+                    </div>
+                </footer>
+            );
+        };
+
+        // --- Main App Component ---
+        const App = () => {
+            return (
+                <div className="min-h-screen bg-castle-dark flex flex-col">
+                    <Header />
+                    <main className="flex-grow">
+                        <Hero />
+                    </main>
+                    <Footer />
+                </div>
+            );
+        };
+
+        // --- Render ---
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+
+    </script>
+</body>
+</html>
